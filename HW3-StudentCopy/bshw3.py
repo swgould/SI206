@@ -10,3 +10,21 @@
 
 # Deliverables
 # Make sure the new page is uploaded to your GitHub account.
+import requests
+from bs4 import BeautifulSoup
+
+baseurl = 'http://collemc.people.si.umich.edu/data/bshw3StarterFile.html'
+r = requests.get(base_url)
+soup = BeautifulSoup(r.text, "lxml")
+txt = soup.prettify()
+
+webpage = open('file.html', 'w') 
+
+for occurance in txt.findAll('student'):
+	occurance.replace('student', 'amazing student')
+
+
+
+
+
+
