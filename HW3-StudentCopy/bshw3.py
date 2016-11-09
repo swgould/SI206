@@ -14,14 +14,22 @@ import requests
 from bs4 import BeautifulSoup
 
 baseurl = 'http://collemc.people.si.umich.edu/data/bshw3StarterFile.html'
-r = requests.get(base_url)
+r = requests.get(baseurl)
 soup = BeautifulSoup(r.text, "lxml")
 txt = soup.prettify()
 
 webpage = open('file.html', 'w') 
 
-for occurance in txt.findAll('student'):
-	occurance.replace('student', 'amazing student')
+for occurance in soup.find_all(id_="body-inside"):
+	for word in occurance(class_="body-inside2"):
+		if word.a == 'studnet':
+			word.a.replace('student', 'AMAZING student').strip()
+
+
+# webpage.write()
+# webpage.close()
+
+# webbrowser.open_new_tab('http://collemc.people.si.umich.edu/data/bshw3StarterFile.html')
 
 
 
