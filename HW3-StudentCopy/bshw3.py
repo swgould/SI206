@@ -12,26 +12,43 @@
 # Make sure the new page is uploaded to your GitHub account.
 import requests
 from bs4 import BeautifulSoup
+import re
 
 baseurl = 'http://collemc.people.si.umich.edu/data/bshw3StarterFile.html'
 r = requests.get(baseurl)
-soup = BeautifulSoup(r.text, "lxml")
-txt = soup.prettify()
+soup = BeautifulSoup(r.text, "html.parser")
 
 
-for occurance in soup.find_all(id_="body-inside"):
-	for word in occurance(class_="body-inside2"):
-		if word.a == 'studnet':
-			word.a.replace('student', 'AMAZING student').strip()
+word = soup.find_all('p')
+for occurance in word: 
+	element = occurance.text
+	paragraph = re.findall('\\bstudent\\b', element)
+	print (paragraph)
+	element = re.sub('\\bstudent\\b', 'AMAZING student', element)
+	print (element)
+
+link = soup.find_all('img')
+
+for a in link: 
+	href = a["src"]
+	if (href) == "https://testbed.files.wordpress.com/2012/09/bsi_exposition_041316_192.jpg": 
+		a["src"] = "http://new-files.camplenox.com/photos/uploads/15052/normal/sami20140626-16047-zowl8k-0.jpg"
+
+for a in link: 
+	href = a["src"]
+	if not href.startswith("https:"):
+		print ("before changing",a["src"])
+		a["src"] = "https://raw.githubusercontent.com/cvanlent/SI206/master/HW3-StudentCopy/media/logo.png"
+		print (a['src'])
+
+result = str(soup)
 
 
+f = open("project3.html", "w") 
 
-webpage = open('file.html', 'w') 
+f.write(result)
+f.close()
 
-webpage.write()
-webpage.close()
-
-webbrowser.open_new_tab('http://collemc.people.si.umich.edu/data/bshw3StarterFile.html')
 
 
 

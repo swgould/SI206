@@ -11,7 +11,7 @@ import tweepy
 from tweepy import OAuthHandler
 from tweepy import API 
 from tweepy import Cursor
-from textblob import TextBlob
+from textblob import TextBlob 
 
 consumer_key = "I1NE9EwNVekvFYkeiiwaoT3iZ"
 consumer_secret = "injoKb5LWmAekKH9ALdscuG9B00Gs456kKi3Ykt2uwD3OD5QVM"
@@ -29,6 +29,7 @@ for tweets in tweepy.Cursor(api.search, q=search_term, result_type='recent', inc
 
 analysis = TextBlob(tweets.text)
 print (analysis.sentiment)
+
 sub = analysis.sentiment.subjectivity
 pol = analysis.sentiment.polarity
 print ('The average subjectivity is:', sub)
