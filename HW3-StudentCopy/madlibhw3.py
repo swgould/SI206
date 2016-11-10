@@ -33,18 +33,22 @@ text2 = "austen-sense.txt" # need a file with this name in directory
 f = open(text2, 'r')
 para = f.read()
 tokens = nltk.word_tokenize(para)
-print("TOKENS")
-print(tokens)
+#print("TOKENS")
+#print(tokens)
 tagged_tokens = nltk.pos_tag(tokens) # gives us a tagged list of tuples
-print("TAGGED TOKENS")
-print(tagged_tokens)
+#print("TAGGED TOKENS")
 if debug:
 	print ("First few tagged tokens are:")
-	for tup in tagged_tokens[:5]:
+	for tup in tagged_tokens[:150]:
 		print (tup)
 
-tagmap = {"NN":"a noun","NNS":"a plural noun","VB":"a verb","JJ":"an adjective"}
-substitution_probabilities = {"NN":.1,"NNS":.2,"VB":.25,"JJ":.25}
+x = []
+for each in tagged_tokens[:151]:
+	x.append(each[0])
+print ( " ".join(x))
+
+tagmap = {"NN":"a noun","NNS":"a plural noun","VB":"a verb","JJ":"an adjective", "PRP":"a preposition"}
+substitution_probabilities = {"NN":.15,"NNS":.10,"VB":.10,"JJ":.10, "PRP":.10}
 
 def spaced(word):
 	if word in [",", ".", "?", "!", ":"]:
@@ -54,13 +58,18 @@ def spaced(word):
 
 final_words = []
 
-
+count = 0
 for (word, tag) in tagged_tokens:
-	if tag not in substitution_probabilities or random.random() > substitution_probabilities[tag]:
-		final_words.append(spaced(word))
-	else:
-		new_word = input("Please enter %s:\n" % (tagmap[tag]))
-		final_words.append(spaced(new_word))
+	if count <= 150:
+		if tag not in substitution_probabilities or random.random() > substitution_probabilities[tag]:
+			final_words.append(spaced(word))
+		else:
+			new_word = input("Please enter %s:\n" % (tagmap[tag]))
+			final_words.append(spaced(new_word))
+			count += 1
+			continue
+
+
 
 print ("".join(final_words))
 

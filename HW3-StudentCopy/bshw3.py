@@ -18,7 +18,6 @@ r = requests.get(baseurl)
 soup = BeautifulSoup(r.text, "lxml")
 txt = soup.prettify()
 
-webpage = open('file.html', 'w') 
 
 for occurance in soup.find_all(id_="body-inside"):
 	for word in occurance(class_="body-inside2"):
@@ -26,10 +25,13 @@ for occurance in soup.find_all(id_="body-inside"):
 			word.a.replace('student', 'AMAZING student').strip()
 
 
-# webpage.write()
-# webpage.close()
 
-# webbrowser.open_new_tab('http://collemc.people.si.umich.edu/data/bshw3StarterFile.html')
+webpage = open('file.html', 'w') 
+
+webpage.write()
+webpage.close()
+
+webbrowser.open_new_tab('http://collemc.people.si.umich.edu/data/bshw3StarterFile.html')
 
 
 
